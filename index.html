@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador Sensi Free Fire</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body {
+            background: #2D0C5E; /* ROXO ESCURO */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            background: #990000; /* VERMELHO */
+            padding: 25px 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            border: 2px solid #CC0000;
+            width: 100%;
+            max-width: 420px;
+        }
+        h1 { font-size: 1.5rem; text-align: center; margin-bottom: 5px; color: #FF3333; }
+        .criador { text-align: center; font-size: 0.9rem; color: #FF9999; margin-bottom: 15px; }
+
+        .perfis-titulo { font-size: 1rem; font-weight: bold; color: #D8BFD8; margin-bottom: 12px; }
+        .perfis-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            background: #3B0E7A; /* ROXO MAIS CLARO */
+            border-radius: 12px;
+            padding: 10px 5px;
+        }
+        .perfis-wrapper::-webkit-scrollbar { height: 4px; }
+        .perfis-wrapper::-webkit-scrollbar-thumb { background: #6A0DAD; border-radius: 2px; }
+        .perfis { display: flex; gap: 16px; padding: 4px 2px; }
+        .perfil-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .perfil-item:hover { transform: scale(1.05); }
+        .perfil-foto {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #6A0DAD;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            background: #4B0082;
+        }
+        .perfil-foto.ativo {
+            border-color: #FF0000;
+            box-shadow: 0 0 12px #FF0000;
+        }
+        .perfil-nome { font-size: 0.75rem; color: #DDA0DD; white-space: nowrap; }
+
+        .plataforma { display: flex; gap: 25px; justify-content: center; margin-bottom: 20px; }
+        .plat-opcao { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .bolinha {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #FF6666;
+            background: transparent;
+            transition: all 0.2s;
+        }
+        .bolinha.ativa {
+            border-color: #FF0000;
+            background: #FF0000;
+            box-shadow: 0 0 8px #FF0000;
+        }
+        .plat-texto { font-size: 0.95rem; color: #FFCCCC; }
+
+        .marca-label { display: block; margin-bottom: 8px; font-size: 0.95rem; color: #FFCCCC; }
+        #marca {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background: #CC0000;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            border: 1px solid #FF3333;
+        }
+        #marca::placeholder { color: #FF9999; }
+
+        .opcao {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: linear-gradient(90deg, #CC0000, #FF0000);
+            color: white;
+            border: 2px solid #FF3333;
+        }
+        .opcao:hover { transform: scale(1.03); background: linear-gradient(90deg, #FF0000, #CC0000); }
+
+        .resultado {
+            margin-top: 20px;
+            padding: 18px;
+            background: #660000;
+            border-radius: 12px;
+            display: none;
+            border: 2px solid #FF3333;
+        }
+        .resultado h2 { font-size: 1.2rem; margin-bottom: 10px; color: #FF6666; }
+        .resultado p { margin: 5px 0; font-size: 0.95rem; color: #FFCCCC; }
+        .linha { border-top: 1px solid #FF3333; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Gerador Sensi Free Fire</h1>
+        <p class="criador">Criador: usuário</p>
+
+        <p class="perfis-titulo">PERFIS DOS FAMOSOS ← Arrasta pro lado →</p>
+        <div class="perfis-wrapper">
+            <div class="perfis">
+                <div class="perfil-item" onclick="clonarPerfil('Nobru')">
+                    <img src="nobru.jpg" class="perfil-foto" id="foto-nobru" alt="Nobru">
+                    <span class="perfil-nome">NOBRU</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Cerol')">
+                    <img src="cerol.jpg" class="perfil-foto" id="foto-cerol" alt="Cerol">
+                    <span class="perfil-nome">CEROL</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Deusa')">
+                    <img src="deusa.jpg" class="perfil-foto" id="foto-deusa" alt="Deusa">
+                    <span class="perfil-nome">DEUSA</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Fantasma')">
+                    <img src="fantasma.jpg" class="perfil-foto" id="foto-fantasma" alt="Fantasma">
+                    <span class="perfil-nome">FANTASMA</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Two9')">
+                    <img src="two9.jpg" class="perfil-foto" id="foto-two9" alt="Two9">
+                    <span class="perfil-nome">TWO9</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Mikasaff')">
+                    <img src="mikasaff.jpg" class="perfil-foto" id="foto-mikasaff" alt="Mikasaff">
+                    <span class="perfil-nome">MIKASAFF</span>
+                </div>
+                <div class="perfil-item" onclick="clonarPerfil('Marechal')">
+                    <img src="marechal.jpg" class="perfil-foto" id="foto-marechal" alt="Marechal">
+                    <span class="perfil-nome">MARECHAL</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="plataforma">
+            <label class="plat-opcao" onclick="escolherPlat('Android')">
+                <div class="bolinha ativa" id="bolinhaAndroid"></div>
+                <span class="plat-texto">📱 Android</span>
+            </label>
+            <label class="plat-opcao" onclick="escolherPlat('iOS')">
+                <div class="bolinha" id="bolinhaIOS"></div>
+                <span class="plat-texto">🍎 iOS</span>
+            </label>
+        </div>
+
+        <label class="marca-label">Marca do celular:</label>
+        <input type="text" id="marca" placeholder="Ex: Samsung, iPhone, Xiaomi...">
+
+        <button class="opcao" onclick="gerarSensi('Baixa')">🟢 SENSIBILIDADE BAIXA</button>
+        <button class="opcao" onclick="gerarSensi('Média')">🟡 SENSIBILIDADE MÉDIA</button>
+        <button class="opcao" onclick="gerarSensi('Alta')">🔴 SENSIBILIDADE ALTA</button>
+
+        <div class="resultado" id="resultado">
+            <h2 id="tituloSensi"></h2>
+            <p><strong>Plataforma:</strong> <span id="platEscolhida"></span></p>
+            <p><strong>Perfil:</strong> <span id="perfilEscolhido"></span></p>
+            <p><strong>Marca:</strong> <span id="marcaEscolhida"></span></p>
+            <div class="linha"></div>
+            <p><strong>Tamanho Botão de Atirar:</strong> <span id="tamanhoBotao"></span>%</p>
+            <p><strong>Geral:</strong> <span id="geral"></span></p>
+            <p><strong>Ponto Vermelho:</strong> <span id="ponto"></span></p>
+            <p><strong>Mira 2x:</strong> <span id="x2"></span></p>
+            <p><strong>Mira 4x:</strong> <span id="x4"></span></p>
+            <p><strong>Sniper:</strong> <span id="sniper"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let plataforma = 'Android';
+
+        function escolherPlat(p) {
+            plataforma = p;
+            document.getElementById('bolinhaAndroid').classList.toggle('ativa', p === 'Android');
+            document.getElementById('bolinhaIOS').classList.toggle('ativa', p === 'iOS');
+        }
+
+        function aleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        const perfis = {
+            Nobru:     { tamanhoBotao: 45, geral: 186, ponto: 200, x2: 200, x4: 200, sniper: 154 },
+            Cerol:     { tamanhoBotao: 44, geral: 175, ponto: 180, x2: 172, x4: 160, sniper: 135 },
+            Deusa:     { tamanhoBotao: 43, geral: 178, ponto: 185, x2: 170, x4: 162, sniper: 128 },
+            Fantasma:  { tamanhoBotao: 42, geral: 192, ponto: 195, x2: 188, x4: 175, sniper: 145 },
+            Two9:      { tamanhoBotao: 43, geral: 190, ponto: 188, x2: 175, x4: 165, sniper: 140 },
+            Mikasaff:  { tamanhoBotao: 44, geral: 182, ponto: 186, x2: 174, x4: 166, sniper: 132 },
+            Marechal:  { tamanhoBotao: 46, geral: 172, ponto: 178, x2: 165, x4: 155, sniper: 122 }
+        };
+
+        const fotoIds = {
+            Nobru: 'foto-nobru',
+            Cerol: 'foto-cerol',
+            Deusa: 'foto-deusa',
+            Fantasma: 'foto-fantasma',
+            Two9: 'foto-two9',
+            Mikasaff: 'foto-mikasaff',
+            Marechal: 'foto-marechal'
+        };
+
+        function clonarPerfil(nome) {
+            document.querySelectorAll('.perfil-foto').forEach(f => f.classList.remove('ativo'));
+            document.getElementById(fotoIds[nome]).classList.add('ativo');
+
+            const p = perfis[nome];
+            const marca = document.getElementById('marca').value || 'Não informada';
+
+            document.getElementById('tituloSensi').textContent = `✅ SENSIBILIDADE DE ${nome.toUpperCase()}`;
+            document.getElementById('platEscolhida').textContent = plataforma;
+            document.getElementById('perfilEscolhido').textContent = nome;
+            document.getElementById('marcaEscolhida').textContent = marca;
+            document.getElementById('tamanhoBotao').textContent = p.tamanhoBotao;
+            document.getElementById('geral').textContent = p.geral;
+            document.getElementById('ponto').textContent = p.ponto;
+            document.getElementById('x2').textContent = p.x2;
+            document.getElementById('x4').textContent = p.x4;
+            document.getElementById('sniper').textContent = p.sniper;
+            document.getElementById('resultado').style.display = 'block';
+        }
+
+        function gerarSensi(nivel) {
+            document.querySelectorAll('.perfil-foto').forEach(f => f.classList.remove('ativo'));
+
+            const marca = document.getElementById('marca').value || 'Não informada';
+            let s = {};
+
+            if (nivel === 'Baixa') {
+                s = { tamanhoBotao: aleatorio(52, 60), geral: aleatorio(70, 95), ponto: aleatorio(65, 90), x2: aleatorio(60, 85), x4: aleatorio(55, 80), sniper: aleatorio(40, 70) };
+            } else if (nivel === 'Média') {
+                s = { tamanhoBotao: aleatorio(45, 51), geral: aleatorio(90, 140), ponto: aleatorio(85, 135), x2: aleatorio(80, 130), x4: aleatorio(75, 125), sniper: aleatorio(60, 100) };
+            } else if (nivel === 'Alta') {
+                s = { tamanhoBotao: aleatorio(35, 44), geral: aleatorio(120, 200), ponto: aleatorio(115, 200), x2: aleatorio(110, 200), x4: aleatorio(105, 200), sniper: aleatorio(90, 180) };
+            }
+
+            document.getElementById('tituloSensi').textContent = `SENSIBILIDADE ${nivel.toUpperCase()} - ALEATÓRIA`;
+            document.getElementById('platEscolhida').textContent = plataforma;
+            document.getElementById('perfilEscolhido').textContent = 'Gerada automaticamente';
+            document.getElementById('marcaEscolhida').textContent = marca;
+            document.getElementById('tamanhoBotao').textContent = s.tamanhoBotao;
+            document.getElementById('geral').textContent = s.geral;
+            document.getElementById('ponto').textContent = s.ponto;
+            document.getElementById('x2').textContent = s.x2;
+            document.getElementById('x4').textContent = s.x4;
+            document.getElementById('sniper').textContent = s.sniper;
+            document.getElementById('resultado').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
